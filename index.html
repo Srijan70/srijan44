@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zoro The Explorer</title>
+</head>
+<body style="font-family:Arial, sans-serif; margin:0; background:#f5f5f5;">
+
+<!-- HEADER -->
+<div style="background:#2874f0; color:white; padding:15px; text-align:center;">
+  <h1 style="margin:0;">🛒 Zoro The Explorer</h1>
+  <p id="welcomeText" style="margin:5px 0 0 0;">Welcome to your favorite shopping site!</p>
+</div>
+
+<!-- HOME SECTION -->
+<div style="padding:20px; background:white; margin:20px;">
+  <h2>Home</h2>
+  <p>Welcome to <b>Zoro The Explorer</b> — India’s most trusted online shopping experience.  
+  We bring you amazing deals on mobiles, electronics, fashion, and more!  
+  Shop confidently with quality assurance and fast delivery all across India 🇮🇳.</p>
+
+  <ul>
+    <li>🔥 Mega Sale: Up to 60% off electronics</li>
+    <li>🎽 Trending Styles: New fashion arrivals every week</li>
+    <li>🚚 Free delivery on orders above ₹499</li>
+  </ul>
+</div>
+
+<!-- PRODUCT SECTION -->
+<div style="padding:20px; background:white; margin:20px;">
+  <h2>Products</h2>
+  <div style="display:flex; flex-wrap:wrap; gap:20px;">
+
+    <div style="border:1px solid #ccc; border-radius:10px; width:220px; padding:10px; text-align:center;">
+      <img src="https://mobitez.in/wp-content/uploads/2024/07/Oneplus-Nord-4-5G-Oasis-Green.webp" width="200" height="200" alt="Phone">
+      <h3>Smartphone X</h3>
+      <p>₹24,999</p>
+      <button onclick="buyProduct('Smartphone X')" style="margin:5px;">Buy</button>
+      <button onclick="addWishlist('Smartphone X')" style="margin:5px;">Add to Wishlist</button>
+    </div>
+
+    <div style="border:1px solid #ccc; border-radius:10px; width:220px; padding:10px; text-align:center;">
+      <img src="https://sm.pcmag.com/pcmag_au/photo/m/msi-titan-/msi-titan-18-hx_r2s9.jpg" width="200" height="200" alt="Laptop">
+      <h3>Laptop Pro</h3>
+      <p>₹59,999</p>
+      <button onclick="buyProduct('Laptop Pro')" style="margin:5px;">Buy</button>
+      <button onclick="addWishlist('Laptop Pro')" style="margin:5px;">Add to Wishlist</button>
+    </div>
+
+    <div style="border:1px solid #ccc; border-radius:10px; width:220px; padding:10px; text-align:center;">
+      <img src="https://m.media-amazon.com/images/I/61idJhHP5FL._AC_UF350,350_QL80_.jpg" width="200" height="200" alt="Headphones">
+      <h3>Wireless Headphones</h3>
+      <p>₹2,499</p>
+      <button onclick="buyProduct('Wireless Headphones')" style="margin:5px;">Buy</button>
+      <button onclick="addWishlist('Wireless Headphones')" style="margin:5px;">Add to Wishlist</button>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNT SECTION -->
+<div style="padding:20px; background:white; margin:20px;">
+  <h2>Account</h2>
+  <div style="display:flex; flex-wrap:wrap; gap:40px;">
+
+    <!-- REGISTER -->
+    <div style="flex:1;">
+      <h3>Register</h3>
+      <form onsubmit="event.preventDefault(); registerUser();">
+        <input id="regUsername" placeholder="Username" style="margin:5px;"><br>
+        <input id="regEmail" type="email" placeholder="Email" style="margin:5px;"><br>
+        <input id="regPassword" type="password" placeholder="Password" style="margin:5px;"><br>
+        <button type="submit" style="margin:5px;">Register</button>
+      </form>
+      <p id="regMsg"></p>
+    </div>
+
+    <!-- LOGIN -->
+    <div style="flex:1;">
+      <h3>Login</h3>
+      <form onsubmit="event.preventDefault(); loginUser();">
+        <input id="loginEmail" placeholder="Email or Username" style="margin:5px;"><br>
+        <input id="loginPassword" type="password" placeholder="Password" style="margin:5px;"><br>
+        <button type="submit" style="margin:5px;">Login</button>
+      </form>
+      <p id="loginMsg"></p>
+    </div>
+  </div>
+</div>
+
+<!-- WISHLIST -->
+<div style="padding:20px; background:white; margin:20px;">
+  <h2>My Wishlist</h2>
+  <ul id="wishlist"></ul>
+</div>
+
+<!-- CONTACT US -->
+<div style="padding:20px; background:white; margin:20px;">
+  <h2>Contact Us</h2>
+  <p>📧 Email: zorotheexplorer@gmail.com</p>
+  <p>📞 Phone: +91 99623 40547</p>
+  <p>📍 Address: chennai, India</p>
+</div>
+
+<!-- ABOUT -->
+<div style="padding:20px; background:white; margin:20px;">
+  <h2>About Us</h2>
+  <p><b>Zoro The Explorer</b> is an Indian e-commerce platform built to make online shopping fast, simple, and secure. We offer quality products, trusted service, and exciting offers every day. Explore the joy of smart shopping today!</p>
+</div>
+
+<!-- FOOTER -->
+<div style="background:#2874f0; color:white; text-align:center; padding:10px; margin-top:30px;">
+  <p>© 2025 Zoro The Explorer — All Rights Reserved.</p>
+</div>
+
+<!-- SCRIPT -->
+<script>
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let currentUser = null;
+
+  function registerUser() {
+    const username = document.getElementById('regUsername').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
+    const msg = document.getElementById('regMsg');
+
+    if (!username || !email || !password) {
+      msg.style.color = 'red';
+      msg.textContent = 'All fields are required!';
+      return;
+    }
+
+    if (users.find(u => u.email === email)) {
+      msg.style.color = 'red';
+      msg.textContent = 'Email already registered!';
+      return;
+    }
+
+    users.push({ username, email, password, wishlist: [] });
+    localStorage.setItem("users", JSON.stringify(users));
+    msg.style.color = 'green';
+    msg.textContent = 'Registration successful! You can now log in.';
+  }
+
+  function loginUser() {
+    const emailOrUsername = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const msg = document.getElementById('loginMsg');
+
+    const user = users.find(u =>
+      (u.email === emailOrUsername || u.username === emailOrUsername) &&
+      u.password === password
+    );
+
+    if (user) {
+      currentUser = user;
+      msg.style.color = 'green';
+      msg.textContent = 'Login successful! Welcome, ' + user.username + '!';
+      document.getElementById('welcomeText').textContent = 'Welcome, ' + user.username + ' 👋';
+    } else {
+      msg.style.color = 'red';
+      msg.textContent = 'Invalid credentials!';
+    }
+  }
+
+  function buyProduct(name) {
+    if (currentUser) {
+      alert('Thank you, ' + currentUser.username + '! You bought: ' + name);
+    } else {
+      alert('Please log in to buy ' + name);
+    }
+  }
+
+  function addWishlist(item) {
+    if (!currentUser) {
+      alert('Please log in to add to wishlist');
+      return;
+    }
+    currentUser.wishlist.push(item);
+    localStorage.setItem("users", JSON.stringify(users));
+    displayWishlist();
+    alert(item + ' added to wishlist!');
+  }
+
+  function displayWishlist() {
+    const wishlistUl = document.getElementById('wishlist');
+    wishlistUl.innerHTML = '';
+    if (currentUser && currentUser.wishlist.length > 0) {
+      currentUser.wishlist.forEach(i => {
+        const li = document.createElement('li');
+        li.textContent = i;
+        wishlistUl.appendChild(li);
+      });
+    } else {
+      wishlistUl.innerHTML = '<p>No items in wishlist.</p>';
+    }
+  }
+</script>
+
+</body>
+</html>
